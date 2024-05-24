@@ -41,11 +41,14 @@ export class TasksController{
 
     }
 
+   
+
     //obtengo el body
     @Post("/tasks")
     @UsePipes(new ValidationPipe())
     postTask(@Body() body_from_fetch: CreateTaskDto  /*Digo el tipo de dato que estoy recibiendo y lo que voy a recibir*/ ){
 
+        console.log("1:13:06")
         
         return this.tasksService.createTask(body_from_fetch)
 
