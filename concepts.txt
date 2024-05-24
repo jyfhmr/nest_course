@@ -1,0 +1,7 @@
+controller => Funciones que se ejecutaran cuando una ruta sea visitada
+
+services => funciones reutilizables para poder hacer consultar de base de datos
+
+dto => Sirve para definir como vamos a recibir los datos 
+
+interceptors => funciones intermedias
