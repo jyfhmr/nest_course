@@ -1,6 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Query, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { CreateTaskDto } from "./dto/create-task.dto";
+import { HttpErrorByCode } from "@nestjs/common/utils/http-error-by-code.util";
+import { ValidadorPipePipe } from "./pipes/validador-pipe/validador-pipe.pipe";
 
 
 @Controller({})
@@ -12,8 +14,8 @@ export class TasksController{
 
    
    @Get("/")
+   @HttpCode(201) //devuelvo este ocdigo de estado
    hello(){
-
        return this.tasksService.hello()
 
    }
@@ -46,7 +48,7 @@ export class TasksController{
     //obtengo el body
     @Post("/tasks")
     @UsePipes(new ValidationPipe())
-    postTask(@Body() body_from_fetch: CreateTaskDto  /*Digo el tipo de dato que estoy recibiendo y lo que voy a recibir*/ ){
+    postTask(@Body() body_from_fetch: CreateTaskDto /*Digo el tipo de dato que estoy recibiendo y lo que voy a recibir*/ ){
 
         console.log("1:13:06")
         
@@ -60,6 +62,20 @@ export class TasksController{
 
         return "Borrando"
 
+    }
+
+    @Get("/add/:num")
+    addNumber(@Param("num", ParseIntPipe) /*Convierto en entero el valor que viene desde el param */ num: number){
+
+        return num+10
+     
+    }
+
+    @Get("processUser")
+    processUser(@Query(ValidadorPipePipe) queryPersonalizated: {name: string, age: number}){
+
+
+        return "asd: "+queryPersonalizated.name+" "+queryPersonalizated.age
     }
 
 }
